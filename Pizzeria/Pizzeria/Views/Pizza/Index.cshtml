@@ -28,10 +28,10 @@
                         <br />
                         <span>@Html.DisplayFor(modelItem => item.Descrizione)</span>
                         <br />
-                        @if (User.Identity.IsAuthenticated)
+                        @*@if (User.Identity.IsAuthenticated)
                         {
                             <span>Scegli la quantità<input type="number" name="quantity" id="quantity" min="1" step="1" value="1" style="width: 50px; margin-left: 5px;"></span>
-                        }
+                        }*@
                     <div class="d-flex justify-content-center">
                         @if (User.Identity.IsAuthenticated)
                         {

@@ -6,51 +6,62 @@
 
 <h2>Carrello</h2>
 
-<table class="table" style="margin-bottom:200px">
-    <tr>
-        <th>Immagine</th>
-        <th>Nome</th>
-        <th>Prezzo</th>
-        <th>Tempo di Consegna</th>
-        <th>Ingredienti</th>
-        <th>Opzioni</th>
-    </tr>
+@using (Html.BeginForm("Ordina", "Ordina", FormMethod.Post))
+{
+    <table class="table table-striped" style="margin-bottom: 200px;">
+        <thead>
+            <tr>
+                <th>Immagine</th>
+                <th>Nome</th>
+                <th>Prezzo</th>
+                <th>Tempo di Consegna</th>
+                <th>Ingredienti</th>
+                <th>Note</th>
+                <th>Rimuovi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                decimal Tot = 0;
+            }
 
-    @{
-        decimal Tot = 0;
-    }
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><img src="@item.Foto" alt="Immagine Pizza" style="width: 100px; height: 100px;" /></td>
+                    <td>@item.Nome</td>
+                    <td>@item.Prezzo €</td>
+                    <td>@item.TempoConsegna min</td>
+                    <td>@item.Descrizione</td>
+                    <td><input type="text" class="form-control" name="note" placeholder="Note" required></td>
+                    <td>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td><img src="@item.Foto" alt="Immagine Pizza" style="width: 100px; height: 100px;" /></td>
-            <td>@item.Nome</td>
-            <td>@item.Prezzo €</td>
-            <td>@item.TempoConsegna min</td>
-            <td>@item.Descrizione</td>
-            <td>
-                <button class="button2">  @Html.ActionLink("Rimuovi", "RemoveFromCart", "Pizza", new { id = item.IdPizza }, null)</button>
-            </td>
-        </tr>
+                        @Html.ActionLink("Rimuovi", "RemoveFromCart", new { id = item.IdPizza }, new { @class = "button2" })
+                    </td>
+                </tr>
 
-        { Tot += item.Prezzo; }
+                { Tot += item.Prezzo; }
+            }
 
-
-        <tr>
-            <td></td>
-            <td></td>
-            <td><strong>Tot: @Tot €</strong></td>
-            <td></td>
-            <td></td>
-            <td> <button class="button2">  @Html.ActionLink("Ordina", "Ordina", "Ordina", new { id = item.IdPizza }, null)</button></td>
-        </tr>
-    }
-
-</table>
+            <tr>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"> <strong> @Tot € </strong> </td>
+                <td colspan="1"></td>
+                <td colspan="1"></td>
+                <td colspan="1"> <input type="text" class="form-control" name="indirizzo" placeholder="Indirizzo" required> </td>
+                <td colspan="1">
+                    <button type="submit" class="button2">Ordina</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
 
 @if (!Model.Any())
 {
-    <div class="alert mb-5 shadow" role="alert" style="background-color:moccasin">
+    <div class="alert mb-5 shadow" role="alert" style="background-color: moccasin;">
         Il carrello è vuoto al momento. Inizia ad aggiungere deliziose pizze per riempirlo!
     </div>
+
 }

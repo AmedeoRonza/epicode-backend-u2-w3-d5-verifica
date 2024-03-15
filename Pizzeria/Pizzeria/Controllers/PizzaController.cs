@@ -141,13 +141,13 @@ namespace Pizzeria.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        [AllowAnonymous]
         public ActionResult Carrello()
         {
             var carrello = Session["Carrello"] as List<Pizza> ?? new List<Pizza>();
             return View(carrello);
         }
-
+        [AllowAnonymous]
         public ActionResult AddToCart(int id)
         {
             using (var dbContext = new ModelDbContext())
@@ -169,7 +169,7 @@ namespace Pizzeria.Controllers
                 return RedirectToAction("Index", "Pizza");
             }
         }
-
+        [AllowAnonymous]
         public ActionResult RemoveFromCart(int id)
         {
             using (var dbContext = new ModelDbContext())
